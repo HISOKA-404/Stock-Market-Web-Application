@@ -15,12 +15,12 @@ import six.moves
 # Common Date Range: 01/03/2010 - 28/02/2020
 
 st.write("""
-# Stock Market Web Application
-**Visually** show data on Stock! Date Range: March 1, 2010 - February 28, 2020         
+Stock Market Web Application\n
+**Visually** shows data on Stock! Date Range: March 1, 2010 - February 28, 2020         
 """)
 
 image = Image.open("D:/Programming/Projects/Stock Market Web Application/stock_market.jpeg")
-st.image(image, use_column_width=True)
+st.image(image)
 
 # Create a sidebar header
 # User select date range and stock name/picker 
@@ -28,8 +28,8 @@ st.sidebar.header("User Input")
 
 # Define a function to get date input from user
 def get_input():
-    start_date = st.sidebar.text_input("Start Date", "2010-03-01") 
-    end_date = st.sidebar.text_input("End Date", "2020-02-28") 
+    start_date = st.sidebar.text_input("Start Date", "2010/03/01") 
+    end_date = st.sidebar.text_input("End Date", "2020/02/28") 
     stock_symbol = st.sidebar.text_input("Stock Symbol", "AMZN")
     return start_date, end_date, stock_symbol
 
@@ -96,7 +96,7 @@ def get_company_data(symbol, start_date, end_date):
     # We want to access the stock data in this date range "using this index 
     df = df.set_index(pd.DatetimeIndex(df["Date"].values))
     
-    return df.iloc[start_row:end_row+1, :] # return the data frame within this rows, 2nd parameter : describes return all the columns 
+    return df.iloc[start_row:end_row+1, :] # return the data frame within this rows, 2nd parameter ():) describes return all the columns 
 
 # Get the user input 
 start_date, end_date, symbol = get_input()
@@ -105,15 +105,15 @@ start_date, end_date, symbol = get_input()
 df = get_company_data(symbol, start_date, end_date)
 
 # Get the company name 
-company_name = get_company_name(symbol)
+company_name = get_company_name(symbol.upper())
 
 # Display the close price
 st.header(company_name+" Close Price\n")
-st.line_chart(df["Close"])
+st.line_chart(df['Close'])  
 
 # Display the Volume
 st.header(company_name+" Volume\n")
-st.line_chart(df["Volume"])
+st.line_chart(df['Volume'])
 
 # Get statistics on the data
 st.header("Data Statistics")
